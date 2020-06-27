@@ -39,7 +39,7 @@ class Bootstrap {
         const DB_NAME = "schooldbuat";
         const USERNAME = "admin";
         const PASSWORD = "Tanujab#1";
-        const DB_PORT = 3306;
+        const DB_PORT = "3306";
         const DB_SYNCHRONIZE = true;
         const DB_LOGGING = false;
         const DB_DROPSCHEMA = false;
