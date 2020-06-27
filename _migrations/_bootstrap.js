@@ -60,7 +60,7 @@ class Bootstrap {
         })
             .catch(e => {
             console.log("----------------");
-            console.log("Error in connection" + e);
+            console.log("Error in connection" + JSON.stringify(e));
             console.log("----------------");
         });
     }
