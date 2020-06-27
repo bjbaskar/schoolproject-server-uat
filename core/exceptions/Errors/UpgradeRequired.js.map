@@ -1,0 +1,1 @@
+{"version":3,"file":"UpgradeRequired.js","sourceRoot":"","sources":["../../../../src/core/exceptions/Errors/UpgradeRequired.ts"],"names":[],"mappings":";;AAAA,8CAA0C;AAE1C,MAAa,eAAgB,SAAQ,sBAAS;IAI7C,YAAY,OAAe,EAAE,MAA6B;QACzD,KAAK,CAAC,eAAe,CAAC,MAAM,EAAE,OAAO,EAAE,MAAM,CAAC,CAAC;QAHhD,SAAI,GAAW,kBAAkB,CAAC;IAIlC,CAAC;;AALe,sBAAM,GAAG,GAAG,CAAC;AAD9B,0CAOC"}
