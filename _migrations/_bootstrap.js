@@ -33,11 +33,11 @@ class Bootstrap {
         this.currentUser = "admin";
         this.STAFF_ID = "";
         this.ROLE_ID = "";
-        const DB_HOST = "ls-faad96acdbf990017c0062d2d0073b6ac2ecdced.cqkfxxmjfvgx.ap-south-1.rds.amazonaws.com";
-        const DB_NAME = "dbmaster";
-        const USERNAME = "dbmasteruser";
-        const PASSWORD = "Tanujab#1";
-        const DB_PORT = 3306;
+        const DB_HOST = process.env.DB_HOST;
+        const DB_NAME = process.env.DB_NAME;
+        const USERNAME = process.env.USERNAME;
+        const PASSWORD = process.env.PASSWORD;
+        const DB_PORT = Number(process.env.DB_PORT);
         const DB_SYNCHRONIZE = true;
         const DB_LOGGING = false;
         const DB_DROPSCHEMA = false;
@@ -76,6 +76,7 @@ class Bootstrap {
                 yield this.dataConfigAdd(qryManager);
                 yield this.casteAdd(qryManager);
                 yield this.subjectAdd(qryManager);
+                yield this.classAdd(qryManager);
                 yield this.schoolProfileAdd(qryManager);
                 yield this.eduLevels(qryManager);
                 yield this.schoolRules(qryManager);
@@ -364,7 +365,7 @@ class Bootstrap {
                 return res;
             }
             catch (error) {
-                throw new Error(`subjectAdd: Unable to save, ${error}`);
+                throw new Error(`classAdd: Unable to save, ${error}`);
             }
         });
     }
