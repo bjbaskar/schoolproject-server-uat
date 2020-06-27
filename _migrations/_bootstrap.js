@@ -35,11 +35,11 @@ class Bootstrap {
         this.STAFF_ID = "";
         this.ROLE_ID = "";
         dotenv.config();
-        const DB_HOST = process.env.DB_HOST;
-        const DB_NAME = process.env.DB_NAME;
-        const USERNAME = process.env.USERNAME;
-        const PASSWORD = process.env.PASSWORD;
-        const DB_PORT = Number(process.env.DB_PORT);
+        const DB_HOST = "schooldb-uat.cccifm8dyg5y.us-east-2.rds.amazonaws.com";
+        const DB_NAME = "schooldbuat";
+        const USERNAME = "admin";
+        const PASSWORD = "Tanujab#1";
+        const DB_PORT = 3306;
         const DB_SYNCHRONIZE = true;
         const DB_LOGGING = false;
         const DB_DROPSCHEMA = false;
