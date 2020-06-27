@@ -35,7 +35,7 @@ class Bootstrap {
         this.STAFF_ID = "";
         this.ROLE_ID = "";
         dotenv.config();
-        const DB_HOST = "schooldb-uat.cccifm8dyg5y.us-east-2.rds.amazonaws.com";
+        const DB_HOST = "schooldb-uat.cccifm8dyg5y.us-east-2.rds.amazonaws.com:3306";
         const DB_NAME = "schooldbuat";
         const USERNAME = "admin";
         const PASSWORD = "Tanujab#1";
@@ -46,7 +46,7 @@ class Bootstrap {
         typeorm_1.createConnection({
             type: "mysql",
             host: DB_HOST,
-           
+            port: DB_PORT,
             synchronize: DB_SYNCHRONIZE,
             logging: DB_LOGGING,
             dropSchema: DB_DROPSCHEMA,
