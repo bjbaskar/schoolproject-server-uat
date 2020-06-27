@@ -46,7 +46,7 @@ class Bootstrap {
         typeorm_1.createConnection({
             type: "mysql",
             host: DB_HOST,
-            port: DB_PORT,
+           
             synchronize: DB_SYNCHRONIZE,
             logging: DB_LOGGING,
             dropSchema: DB_DROPSCHEMA,
