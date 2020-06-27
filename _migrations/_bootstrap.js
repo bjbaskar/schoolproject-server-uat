@@ -17,6 +17,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const bcrypt = __importStar(require("bcrypt"));
+const dotenv = __importStar(require("dotenv"));
 const Staff_1 = require("../core/entities/Staff/Staff");
 const Users_1 = require("../core/entities/Users/Users");
 const Roles_1 = require("../core/entities/Users/Roles");
@@ -33,6 +34,7 @@ class Bootstrap {
         this.currentUser = "admin";
         this.STAFF_ID = "";
         this.ROLE_ID = "";
+        dotenv.config();
         const DB_HOST = process.env.DB_HOST;
         const DB_NAME = process.env.DB_NAME;
         const USERNAME = process.env.USERNAME;
