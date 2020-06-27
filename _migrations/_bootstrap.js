@@ -573,4 +573,5 @@ class Bootstrap {
 }
 exports.Bootstrap = Bootstrap;
 const test = new Bootstrap();
+test();
 //# sourceMappingURL=_bootstrap.js.map
