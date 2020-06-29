@@ -14,10 +14,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const bcrypt = __importStar(require("bcrypt"));
+require("reflect-metadata");
 const dotenv = __importStar(require("dotenv"));
+const path_1 = __importDefault(require("path"));
 const Staff_1 = require("../core/entities/Staff/Staff");
 const Users_1 = require("../core/entities/Users/Users");
 const Roles_1 = require("../core/entities/Users/Roles");
@@ -35,14 +40,16 @@ class Bootstrap {
         this.STAFF_ID = "";
         this.ROLE_ID = "";
         dotenv.config();
-        const DB_HOST = "schooldb-uat.cccifm8dyg5y.us-east-2.rds.amazonaws.com";
+        const DB_HOST = "db-mysql-sgp1-83374-do-user-4785916-0.a.db.ondigitalocean.com";
         const DB_NAME = "schooldbuat";
-        const USERNAME = "admin";
-        const PASSWORD = "Tanujab#1";
-        const DB_PORT = 3306;
+        const USERNAME = "doadmin";
+        const PASSWORD = "vwq547bmruttlm84";
+        const DB_PORT = 25060;
         const DB_SYNCHRONIZE = true;
         const DB_LOGGING = false;
         const DB_DROPSCHEMA = false;
+        const ePath = path_1.default.join(__dirname, "../core/entities/**/*{.ts,.js}");
+        console.log("===>", ePath);
         typeorm_1.createConnection({
             type: "mysql",
             host: DB_HOST,
@@ -53,14 +60,14 @@ class Bootstrap {
             username: USERNAME,
             password: PASSWORD,
             database: DB_NAME,
-            entities: ["../core/entities/**/*{.ts,.js}"]
+            entities: [ePath]
         })
             .then(() => {
             this.init();
         })
             .catch(e => {
             console.log("----------------");
-            console.log("Error in connection" + e);
+            console.log("Error in connection" + JSON.stringify(e));
             console.log("----------------");
         });
     }
@@ -78,7 +85,6 @@ class Bootstrap {
                 yield this.dataConfigAdd(qryManager);
                 yield this.casteAdd(qryManager);
                 yield this.subjectAdd(qryManager);
-                yield this.classAdd(qryManager);
                 yield this.schoolProfileAdd(qryManager);
                 yield this.eduLevels(qryManager);
                 yield this.schoolRules(qryManager);
@@ -381,7 +387,7 @@ class Bootstrap {
                 sp.logo = "logo comes here";
                 sp.sector = "Private";
                 sp.provider = "K.G. Balaganesan Educational Trust";
-                sp.type = "Matriculation ( Directorate of Matriculation Board )";
+                sp.type = "Matriculation (Directorate of Matric Board)";
                 sp.dateopened = new Date("06/01/1983");
                 sp.address = "Thirukaneeswarar kovil Road, Seithur, Chellathai amman kovil road, Seithur";
                 sp.postalcode = "626121";
@@ -401,7 +407,7 @@ class Bootstrap {
                 return res;
             }
             catch (error) {
-                throw new Error(`${__dirname} School Profile: Unable to save, ${error}`);
+                throw new Error(`School Profile: Unable to save, ${error}`);
             }
         });
     }
