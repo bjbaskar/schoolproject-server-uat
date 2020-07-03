@@ -29,11 +29,11 @@ __decorate([
     __metadata("design:type", String)
 ], Calendar.prototype, "eventstype", void 0);
 __decorate([
-    typeorm_1.Column("timestamp", { nullable: false }),
+    typeorm_1.Column("timestamp", { nullable: false, precision: 2 }),
     __metadata("design:type", Date)
 ], Calendar.prototype, "start", void 0);
 __decorate([
-    typeorm_1.Column("timestamp", { nullable: false }),
+    typeorm_1.Column("timestamp", { nullable: false, precision: 2 }),
     __metadata("design:type", Date)
 ], Calendar.prototype, "end", void 0);
 __decorate([

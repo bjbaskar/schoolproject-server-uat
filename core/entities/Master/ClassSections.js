@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:type", Number)
 ], ClassSections.prototype, "orderby", void 0);
 __decorate([
-    typeorm_1.Column("boolean", { nullable: false }),
+    typeorm_1.Column("boolean", { default: true }),
     __metadata("design:type", Boolean)
 ], ClassSections.prototype, "isactive", void 0);
 __decorate([
