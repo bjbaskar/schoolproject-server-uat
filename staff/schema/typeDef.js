@@ -31,6 +31,7 @@ exports.typeDef = apollo_server_1.gql `
 		identification: String
 		isactive: Boolean
 		notes: String
+		photo: String
 		classes: [ClassSection]
 		subjects: [Subject]
 		user: User

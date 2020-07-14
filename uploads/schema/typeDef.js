@@ -18,6 +18,7 @@ exports.typeDef = apollo_server_1.gql `
 		docid: String
 		filesize: String
 		filetype: String
+		mediaurl: String
 		createdby: String
 		createdon: DateTimeType
 	}

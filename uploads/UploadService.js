@@ -35,9 +35,25 @@ const mkdirp_1 = __importDefault(require("mkdirp"));
 const fs_1 = __importStar(require("fs"));
 const path_1 = __importDefault(require("path"));
 const DocsPhotos_1 = require("../core/entities/DocsPhotos/DocsPhotos");
+const UploadS3Service_1 = require("./UploadS3Service");
 let UploadService = class UploadService {
     constructor() { }
-    uploadPhoto(oFile, inData, photopath, currentUser) {
+    uploadFile(oFile, inData, filePath, currentUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                this.dbInData = inData;
+                this.uploadUser = currentUser;
+                const uploadInSpace = new UploadS3Service_1.UploadS3Service();
+                const result = yield uploadInSpace.uploadFile(oFile, filePath, inData, currentUser);
+                return result;
+            }
+            catch (error) {
+                console.log(error);
+                return error;
+            }
+        });
+    }
+    uploadPhoto_OLD(oFile, inData, photopath, currentUser) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 this.dbInData = inData;

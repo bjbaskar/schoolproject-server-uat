@@ -20,19 +20,19 @@ exports.resolvers = {
             if (moduleName === "SCHOOL" && docType === "DOCS") {
                 photopath = context.Setting.config.upload.schooldocspath;
             }
-            if (moduleName === "SCHOOL" && docType === "PHOTO") {
+            if (moduleName === "SCHOOL" && docType === "PHOTOS") {
                 photopath = context.Setting.config.upload.schoolphotopath;
             }
             if (moduleName === "STAFF" && docType === "DOCS") {
                 photopath = context.Setting.config.upload.staffdocspath;
             }
-            if (moduleName === "STAFF" && docType === "PHOTO") {
+            if (moduleName === "STAFF" && docType === "PHOTOS") {
                 photopath = context.Setting.config.upload.staffphotopath;
             }
             if (moduleName === "STUDENT" && docType === "DOCS") {
                 photopath = context.Setting.config.upload.studentdocspath;
             }
-            if (moduleName === "STUDENT" && docType === "PHOTO") {
+            if (moduleName === "STUDENT" && docType === "PHOTOS") {
                 photopath = context.Setting.config.upload.schoolphotopath;
             }
             const res = yield context.UploadService.downloadFile(args.input, photopath);
@@ -51,28 +51,28 @@ exports.resolvers = {
             if (moduleName === "SCHOOL" && docType === "DOCS") {
                 photopath = context.Setting.config.upload.schooldocspath;
             }
-            if (moduleName === "SCHOOL" && docType === "PHOTO") {
+            if (moduleName === "SCHOOL" && docType === "PHOTOS") {
                 photopath = context.Setting.config.upload.schoolphotopath;
             }
             if (moduleName === "STAFF" && docType === "DOCS") {
                 photopath = context.Setting.config.upload.staffdocspath;
             }
-            if (moduleName === "STAFF" && docType === "PHOTO") {
+            if (moduleName === "STAFF" && docType === "PHOTOS") {
                 photopath = context.Setting.config.upload.staffphotopath;
             }
             if (moduleName === "STUDENT" && docType === "DOCS") {
                 photopath = context.Setting.config.upload.studentdocspath;
             }
-            if (moduleName === "STUDENT" && docType === "PHOTO") {
+            if (moduleName === "STUDENT" && docType === "PHOTOS") {
                 photopath = context.Setting.config.upload.studentphotopath;
             }
             if (moduleName === "ASGN" && docType === "DOCS") {
                 photopath = context.Setting.config.upload.asgndocspath;
             }
-            if (moduleName === "ASGN" && docType === "PHOTO") {
+            if (moduleName === "ASGN" && docType === "PHOTOS") {
                 photopath = context.Setting.config.upload.asgnphotopath;
             }
-            const res = yield context.UploadService.uploadPhoto(oFile, inData, photopath, currentUser);
+            const res = yield context.UploadService.uploadFile(oFile, inData, photopath, currentUser);
             return res;
         }),
         delDocuments(root, args, context) {

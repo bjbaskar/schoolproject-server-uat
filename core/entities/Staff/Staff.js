@@ -106,6 +106,10 @@ __decorate([
     __metadata("design:type", String)
 ], Staff.prototype, "notes", void 0);
 __decorate([
+    typeorm_1.Column("varchar", { length: 1024, nullable: true }),
+    __metadata("design:type", String)
+], Staff.prototype, "photo", void 0);
+__decorate([
     typeorm_1.OneToOne(type => Users_1.Users, user => user.staff),
     __metadata("design:type", Users_1.Users)
 ], Staff.prototype, "user", void 0);

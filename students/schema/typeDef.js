@@ -42,6 +42,7 @@ type Student {
 	isactive: Boolean
 	disability: String
 	notes: String
+	photo: String
 	createdby: String
 	createdon: DateTimeType
 	updatedby: String

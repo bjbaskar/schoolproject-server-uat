@@ -112,6 +112,10 @@ __decorate([
     __metadata("design:type", String)
 ], Students.prototype, "notes", void 0);
 __decorate([
+    typeorm_1.Column("varchar", { length: 1024, nullable: true }),
+    __metadata("design:type", String)
+], Students.prototype, "photo", void 0);
+__decorate([
     typeorm_1.ManyToMany(type => ClassSections_1.ClassSections, cls => cls.students),
     typeorm_1.JoinTable({
         name: "s_j_student_classsec"

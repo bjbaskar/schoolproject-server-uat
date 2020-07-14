@@ -45,6 +45,10 @@ __decorate([
     __metadata("design:type", String)
 ], DocsPhotos.prototype, "filetype", void 0);
 __decorate([
+    typeorm_1.Column("varchar", { length: 1024, nullable: true }),
+    __metadata("design:type", String)
+], DocsPhotos.prototype, "mediaurl", void 0);
+__decorate([
     typeorm_1.ManyToOne(type => Staff_1.Staff, staff => staff.documents, { nullable: true }),
     __metadata("design:type", String)
 ], DocsPhotos.prototype, "staff", void 0);
