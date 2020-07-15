@@ -56,18 +56,13 @@ class UploadS3Service {
                     Key: `${filePath}/${id}.${ext}`,
                     ACL: "public-read"
                 };
-                const res = () => __awaiter(this, void 0, void 0, function* () {
-                    return s3.putObject(params).promise();
-                });
-                const result = (yield res()).$response;
-                if (result.error) {
-                    fileStatus = "No Files Uploaded";
-                    console.log(result.error, result.error.stack);
-                    return { Messages: fileStatus };
-                }
-                if (result.data) {
-                    const res = yield this.saveDB(id, ext);
-                    if (res) {
+                const uploadRes = () => {
+                    return s3.upload(params).promise();
+                };
+                const result = (yield uploadRes()
+                    .then((res) => __awaiter(this, void 0, void 0, function* () {
+                    if (res.ETag) {
+                        const saveRes = yield this.saveDB(id, ext);
                         fileStatus = "Uploaded successfully";
                         return { Messages: fileStatus };
                     }
@@ -75,7 +70,11 @@ class UploadS3Service {
                         fileStatus = "No Files Uploaded";
                         return { Messages: fileStatus };
                     }
-                }
+                }))
+                    .catch(error => {
+                    console.log(error);
+                    return { Messages: fileStatus };
+                }));
             }
             catch (error) {
                 console.log(error);
