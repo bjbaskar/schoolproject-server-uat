@@ -5,6 +5,7 @@ exports.typeDef = apollo_server_1.gql `
   extend type Query {
 	getSubject(id: String): Subject
 	getSubjects: [Subject]
+	# getSubjectsByClass(classId: String): [Subject]
   }
   extend type Mutation {
 	addSubject(input: SubjectInput): Subject

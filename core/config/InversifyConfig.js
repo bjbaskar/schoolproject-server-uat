@@ -24,6 +24,7 @@ const UploadService_1 = require("../../uploads/UploadService");
 const DashboardService_1 = require("../../dashboard/DashboardService");
 const AttendanceService_1 = require("../../attendance/AttendanceService");
 const AssignmentService_1 = require("../../assignment/AssignmentService");
+const ExamService_1 = require("../../exams/ExamService");
 const FeedbackService_1 = require("../../feedback/FeedbackService");
 const ContainerMain = new inversify_1.Container();
 exports.ContainerMain = ContainerMain;
@@ -48,5 +49,6 @@ ContainerMain.bind(InversifyTypes_1.TYPES.UploadService).to(UploadService_1.Uplo
 ContainerMain.bind(InversifyTypes_1.TYPES.DashboardService).to(DashboardService_1.DashboardService);
 ContainerMain.bind(InversifyTypes_1.TYPES.AttendanceService).to(AttendanceService_1.AttendanceService);
 ContainerMain.bind(InversifyTypes_1.TYPES.AssignmentService).to(AssignmentService_1.AssignmentService);
+ContainerMain.bind(InversifyTypes_1.TYPES.ExamService).to(ExamService_1.ExamService);
 ContainerMain.bind(InversifyTypes_1.TYPES.FeedbackService).to(FeedbackService_1.FeedbackService);
 //# sourceMappingURL=InversifyConfig.js.map

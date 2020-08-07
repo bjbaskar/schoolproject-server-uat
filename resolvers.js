@@ -20,7 +20,8 @@ const schema_14 = require("./uploads/schema");
 const schema_15 = require("./dashboard/schema");
 const schema_16 = require("./attendance/schema");
 const schema_17 = require("./assignment/schema");
-const schema_18 = require("./feedback/schema");
+const schema_18 = require("./exams/schema");
+const schema_19 = require("./feedback/schema");
 const upScalartypeDefs = `
   scalar Upload
 `;
@@ -56,9 +57,10 @@ const allTypeDefs = [
     schema_15.dashBoardTypeDef,
     schema_16.attendanceTypeDef,
     schema_17.assignTypeDef,
-    schema_18.feedbackTypeDef
+    schema_18.examTypeDef,
+    schema_19.feedbackTypeDef
 ];
-const allResolvers = lodash_1.merge({}, schema_1.userResolver, schema_2.roleResolver, schema_4.schoolProfileResolver, schema_5.aYearResolver, schema_6.eduResolver, schema_7.subjResolver, schema_8.classResolver, schema_9.textbookResolver, schema_3.dConfigResolver, schema_10.holidayResolver, schema_11.calResolver, schema_12.studentResolver, schema_13.staffResolver, upScalarResolvers, schema_14.uploadResolver, schema_15.dashBoardResolver, schema_16.attendanceResolver, schema_17.assignResolver, schema_18.feedbackResolver);
+const allResolvers = lodash_1.merge({}, schema_1.userResolver, schema_2.roleResolver, schema_4.schoolProfileResolver, schema_5.aYearResolver, schema_6.eduResolver, schema_7.subjResolver, schema_8.classResolver, schema_9.textbookResolver, schema_3.dConfigResolver, schema_10.holidayResolver, schema_11.calResolver, schema_12.studentResolver, schema_13.staffResolver, upScalarResolvers, schema_14.uploadResolver, schema_15.dashBoardResolver, schema_16.attendanceResolver, schema_17.assignResolver, schema_18.examResolver, schema_19.feedbackResolver);
 exports.default = apollo_server_1.makeExecutableSchema({
     typeDefs: allTypeDefs,
     resolvers: allResolvers

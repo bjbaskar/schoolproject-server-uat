@@ -149,7 +149,7 @@ __decorate([
     __metadata("design:type", String)
 ], Staff.prototype, "classtr", void 0);
 __decorate([
-    typeorm_1.OneToOne(type => ClassSections_1.ClassSections, cls => cls.asstclassteacher),
+    typeorm_1.OneToMany(type => ClassSections_1.ClassSections, cls => cls.asstclassteacher),
     __metadata("design:type", String)
 ], Staff.prototype, "asstclasstr", void 0);
 Staff = __decorate([

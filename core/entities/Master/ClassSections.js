@@ -75,7 +75,7 @@ __decorate([
     __metadata("design:type", String)
 ], ClassSections.prototype, "classteacher", void 0);
 __decorate([
-    typeorm_1.OneToOne(type => Staff_1.Staff, st => st.asstclasstr),
+    typeorm_1.ManyToOne(type => Staff_1.Staff, st => st.asstclasstr),
     typeorm_1.JoinColumn(),
     __metadata("design:type", String)
 ], ClassSections.prototype, "asstclassteacher", void 0);

@@ -33,6 +33,8 @@ const SchoolProfile_1 = require("../core/entities/Master/SchoolProfile");
 const EduSystems_1 = require("../core/entities/Master/EduSystems");
 const Caste_1 = require("../core/entities/Master/Caste");
 const RulesRegulations_1 = require("../core/entities/Master/RulesRegulations");
+const Exam_1 = require("../core/entities/Exams/Exam");
+const Grades_1 = require("../core/entities/Exams/Grades");
 class Bootstrap {
     constructor() {
         this.errorArr = Array();
@@ -79,8 +81,6 @@ class Bootstrap {
                 yield queryRunner.connect();
                 yield queryRunner.startTransaction();
                 const qryManager = queryRunner.manager;
-                yield this.subjectAdd(qryManager);
-                yield this.classAdd(qryManager);
                 yield queryRunner.commitTransaction();
                 console.log("----------------");
                 console.log("Sucessfully added");
@@ -316,6 +316,15 @@ class Bootstrap {
                     { name: "IDENTITY", value: "Ration Card" },
                     { name: "IDENTITY", value: "Driving License" },
                     { name: "IDENTITY", value: "Others" },
+                    { name: "EXAM_TYPE", value: "Quarterly Exam" },
+                    { name: "EXAM_TYPE", value: "Halfyearly Exam" },
+                    { name: "EXAM_TYPE", value: "Annual Exam" },
+                    { name: "EXAM_TYPE", value: "Monthly Test - July" },
+                    { name: "EXAM_TYPE", value: "Monthly Test - August" },
+                    { name: "EXAM_TYPE", value: "Monthly Test - October" },
+                    { name: "EXAM_TYPE", value: "Monthly Test - November" },
+                    { name: "EXAM_TYPE", value: "Monthly Test - January" },
+                    { name: "EXAM_TYPE", value: "Monthly Test - February" },
                 ])
                     .execute();
                 return res;
@@ -578,6 +587,104 @@ class Bootstrap {
             }
             catch (error) {
                 throw new Error(`${__dirname} School Profile: Unable to save, ${error}`);
+            }
+        });
+    }
+    examsAdd(qryManager) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const dataConfig = yield typeorm_1.getManager()
+                    .getRepository(DataConfig_1.DataConfig)
+                    .createQueryBuilder("d")
+                    .where("d.name ='EXAM_TYPE'")
+                    .orderBy("d.value", "ASC")
+                    .getMany();
+                const classObj = yield typeorm_1.getManager()
+                    .getRepository(ClassSections_1.ClassSections)
+                    .createQueryBuilder("cls")
+                    .select(["cls.id as classId, subjects.id as subjectId"])
+                    .leftJoinAndSelect("cls.classteachersub", "ct")
+                    .leftJoinAndSelect("ct.subject", "subjects")
+                    .orderBy("cls.name", "ASC")
+                    .getMany();
+                console.log("=-=-=-=-=-=-=-=-=-");
+                console.log(classObj);
+                console.log("=-=-=-=-=-=-=-=-=-");
+                const exams = [];
+                for (let d = 0; d <= dataConfig.length - 1; d++) {
+                    classObj.map((c, idx) => c.classteachersub.map(sub => {
+                        console.log("Class-Subject ===", c.name + " = " + sub.subject);
+                        const e = new Exam_1.Exams();
+                        e.name = dataConfig[d].value;
+                        e.class = c.id;
+                        e.subjects = sub.subject;
+                        e.min_marks = 40;
+                        e.max_marks = 100;
+                        e.orderby = 0;
+                        e.createdby = this.currentUser;
+                        exams.push(e);
+                    }));
+                }
+                const result = yield qryManager
+                    .getRepository(Exam_1.Exams)
+                    .save(exams);
+                return result;
+            }
+            catch (error) {
+                throw new Error(`${__dirname} examsAdd: Unable to save, ${error}`);
+            }
+        });
+    }
+    examGradesAdd(qryManager) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const res = yield qryManager
+                    .createQueryBuilder().insert().into(Grades_1.ExamGrades)
+                    .values([
+                    {
+                        name: "A",
+                        description: "Grade A",
+                        color: "",
+                        grade_point: 5,
+                        min: 79,
+                        max: 100,
+                        orderby: 0,
+                        createdby: this.currentUser
+                    },
+                    {
+                        name: "B",
+                        description: "Grade B",
+                        color: "",
+                        grade_point: 5,
+                        min: 69,
+                        max: 78,
+                        orderby: 0,
+                        createdby: this.currentUser
+                    },
+                    {
+                        name: "C",
+                        description: "Grade C",
+                        color: "",
+                        grade_point: 5,
+                        min: 49,
+                        max: 68,
+                        orderby: 0,
+                        createdby: this.currentUser
+                    },
+                    {
+                        name: "D",
+                        description: "Grade D",
+                        color: "",
+                        grade_point: 5,
+                        min: 0,
+                        max: 48,
+                        orderby: 0,
+                        createdby: this.currentUser
+                    },
+                ]).execute();
+            }
+            catch (error) {
+                throw new Error(`${__dirname} examGradesAdd: Unable to save, ${error}`);
             }
         });
     }

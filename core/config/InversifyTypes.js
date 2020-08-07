@@ -22,6 +22,7 @@ const TYPES = {
     DashboardService: Symbol.for("DashboardService"),
     AttendanceService: Symbol.for("AttendanceService"),
     AssignmentService: Symbol.for("AssignmentService"),
+    ExamService: Symbol.for("ExamService"),
     FeedbackService: Symbol.for("FeedbackService"),
 };
 exports.TYPES = TYPES;

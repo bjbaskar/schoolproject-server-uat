@@ -21,6 +21,7 @@ const inversify_1 = require("inversify");
 const typeorm_1 = require("typeorm");
 const Subject_1 = require("../../core/entities/Master/Subject");
 const exceptions_1 = require("../../core/exceptions");
+const ClassSections_1 = require("../../core/entities/Master/ClassSections");
 let SubjectService = class SubjectService {
     constructor() { }
     addSubject(subject, currentUser) {
@@ -79,6 +80,22 @@ let SubjectService = class SubjectService {
                 const res = yield typeorm_1.getManager()
                     .getRepository(Subject_1.Subject)
                     .createQueryBuilder("subject")
+                    .orderBy("subject.name", "ASC")
+                    .getMany();
+                return res;
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("Unhandled Error", error);
+            }
+        });
+    }
+    listSubjectByClass(classId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const res = yield typeorm_1.getManager()
+                    .getRepository(ClassSections_1.ClassSections)
+                    .createQueryBuilder("cls")
+                    .where("cls.id = :clsId", { clsId: classId })
                     .orderBy("subject.name", "ASC")
                     .getMany();
                 return res;

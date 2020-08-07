@@ -20,7 +20,7 @@ exports.resolvers = {
             return __awaiter(this, void 0, void 0, function* () {
                 return yield context.SubjectService.listSubject();
             });
-        }
+        },
     },
     Mutation: {
         addSubject(root, args, context) {

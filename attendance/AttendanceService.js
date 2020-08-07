@@ -246,14 +246,8 @@ let AttendanceService = class AttendanceService {
     getPieChartByMonth(classId, studentId, currMonth) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const clsCount = yield typeorm_1.getManager()
-                    .getRepository(Attendance_1.Attendance)
-                    .createQueryBuilder("a")
-                    .where("a.classid = :classid", { classid: classId })
-                    .andWhere("DATE_FORMAT(a.attdate, '%m') = :cDate", {
-                    cDate: currMonth
-                })
-                    .getCount();
+                const clsAttCount = yield this.getNoWorkingDays(classId, currMonth);
+                const clsWorkingDays = Number(clsAttCount);
                 const studCount = yield typeorm_1.getManager()
                     .getRepository(Attendance_1.Attendance)
                     .createQueryBuilder("a")
@@ -263,15 +257,15 @@ let AttendanceService = class AttendanceService {
                     cDate: currMonth
                 })
                     .getCount();
-                const noOfDaysPresent = clsCount - studCount;
-                let percentage = (((noOfDaysPresent | 0) / clsCount) * 100).toFixed(1);
+                const noOfDaysPresent = clsWorkingDays - studCount;
+                let percentage = (((noOfDaysPresent | 0) / clsWorkingDays) * 100).toFixed(1);
                 if (noOfDaysPresent === 0) {
                     percentage = "0";
                 }
                 if (isNaN(Number(percentage))) {
                     percentage = "0";
                 }
-                if (clsCount === 0 && studCount === 0) {
+                if (clsWorkingDays === 0 && studCount === 0) {
                     throw new exceptions_1.NotFound(`No Records found for the selected month`);
                 }
                 const response = {
@@ -292,34 +286,42 @@ let AttendanceService = class AttendanceService {
     getPieChartClassWiseByMonth(classId, currMonth) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const clsCount = yield this.getNoWorkingDays(classId, currMonth);
+                const clsAttCount = yield this.getNoWorkingDays(classId, currMonth);
+                const totalStudentInCls = yield this.getClassStrength(classId);
                 const studAbsCount = yield typeorm_1.getManager()
                     .getRepository(Attendance_1.Attendance)
                     .createQueryBuilder("a")
+                    .select("COUNT(DISTINCT DATE_FORMAT(attdate, '%Y-%m-%d'))", "unique")
                     .where("a.classid = :classid", { classid: classId })
                     .andWhere("a.studentid IS NOT NULL")
+                    .andWhere("a.allpresent = 0 ")
                     .andWhere("DATE_FORMAT(a.attdate, '%m') = :cDate", {
                     cDate: currMonth
                 })
-                    .getCount();
-                const noOfDaysPresent = clsCount - studAbsCount;
-                let percentage = (((noOfDaysPresent | 0) / clsCount) * 100).toFixed(1);
-                if (noOfDaysPresent === 0) {
-                    percentage = "0";
+                    .getRawOne();
+                const noOfAbsentees = Number(studAbsCount.unique);
+                const clsWorkingDays = Number(clsAttCount);
+                const absentRate = ((noOfAbsentees / (totalStudentInCls * clsWorkingDays)) * 100);
+                let percentage = (100 - absentRate);
+                if (absentRate === 0) {
+                    percentage = 100;
                 }
                 if (isNaN(Number(percentage))) {
-                    percentage = "0";
+                    percentage = 100;
                 }
-                if (clsCount === 0 && studAbsCount === 0) {
+                if (clsWorkingDays === 0 && noOfAbsentees === 0) {
                     throw new exceptions_1.NotFound(`No Records found for the selected month`);
                 }
+                const noOfPresent = percentage.toFixed();
+                const noOfAbsent = absentRate.toFixed();
+                const totalMonthlyPerc = percentage.toFixed(1);
                 const response = {
                     chartdata: [{
-                            x: "Present", y: noOfDaysPresent
+                            x: "Present", y: noOfPresent
                         }, {
-                            x: "Absent", y: studAbsCount
+                            x: "Absent", y: noOfAbsent
                         }],
-                    attrate: percentage
+                    attrate: totalMonthlyPerc
                 };
                 return response;
             }
@@ -334,12 +336,13 @@ let AttendanceService = class AttendanceService {
                 const res = yield typeorm_1.getManager()
                     .getRepository(Attendance_1.Attendance)
                     .createQueryBuilder("a")
+                    .select("COUNT(DISTINCT DATE_FORMAT(attdate, '%Y-%m-%d'))", "unique")
                     .where("a.classid = :classid", { classid: classId })
                     .andWhere("DATE_FORMAT(a.attdate, '%m') = :cDate", {
                     cDate: currMonth
                 })
-                    .getCount();
-                return res;
+                    .getRawOne();
+                return res.unique;
             }
             catch (error) {
                 throw new exceptions_1.NotFound(`getNoWorkingDays Error: Please change the search criteria`);
@@ -399,6 +402,7 @@ let AttendanceService = class AttendanceService {
                 const result = yield typeorm_1.getManager()
                     .getRepository(Student_1.Students)
                     .createQueryBuilder("st")
+                    .leftJoinAndSelect("st.classsec", "classsec")
                     .where("st.isactive = true")
                     .andWhere("classsec.id = :id", { id: classId })
                     .getCount();

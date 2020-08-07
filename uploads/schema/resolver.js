@@ -75,39 +75,37 @@ exports.resolvers = {
             const res = yield context.UploadService.uploadFile(oFile, inData, photopath, currentUser);
             return res;
         }),
-        delDocuments(root, args, context) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const moduleName = args.input.modulename;
-                const docType = args.input.doctype;
-                let photopath = context.Setting.config.upload.schooldocspath;
-                if (moduleName === "SCHOOL" && docType === "DOCS") {
-                    photopath = context.Setting.config.upload.schooldocspath;
-                }
-                if (moduleName === "SCHOOL" && docType === "PHOTO") {
-                    photopath = context.Setting.config.upload.schoolphotopath;
-                }
-                if (moduleName === "STAFF" && docType === "DOCS") {
-                    photopath = context.Setting.config.upload.staffdocspath;
-                }
-                if (moduleName === "STAFF" && docType === "PHOTO") {
-                    photopath = context.Setting.config.upload.staffphotopath;
-                }
-                if (moduleName === "STUDENT" && docType === "DOCS") {
-                    photopath = context.Setting.config.upload.studentdocspath;
-                }
-                if (moduleName === "STUDENT" && docType === "PHOTO") {
-                    photopath = context.Setting.config.upload.schoolphotopath;
-                }
-                if (moduleName === "ASGN" && docType === "DOCS") {
-                    photopath = context.Setting.config.upload.asgndocspath;
-                }
-                if (moduleName === "ASGN" && docType === "PHOTO") {
-                    photopath = context.Setting.config.upload.asgnphotopath;
-                }
-                const res = yield context.UploadService.delDocuments(args.id, args.input, photopath);
-                return res;
-            });
-        }
+        delDocuments: (root, args, context) => __awaiter(this, void 0, void 0, function* () {
+            const moduleName = args.input.modulename;
+            const docType = args.input.doctype;
+            let photopath = context.Setting.config.upload.schooldocspath;
+            if (moduleName === "SCHOOL" && docType === "DOCS") {
+                photopath = context.Setting.config.upload.schooldocspath;
+            }
+            if (moduleName === "SCHOOL" && docType === "PHOTOS") {
+                photopath = context.Setting.config.upload.schoolphotopath;
+            }
+            if (moduleName === "STAFF" && docType === "DOCS") {
+                photopath = context.Setting.config.upload.staffdocspath;
+            }
+            if (moduleName === "STAFF" && docType === "PHOTOS") {
+                photopath = context.Setting.config.upload.staffphotopath;
+            }
+            if (moduleName === "STUDENT" && docType === "DOCS") {
+                photopath = context.Setting.config.upload.studentdocspath;
+            }
+            if (moduleName === "STUDENT" && docType === "PHOTOS") {
+                photopath = context.Setting.config.upload.studentphotopath;
+            }
+            if (moduleName === "ASGN" && docType === "DOCS") {
+                photopath = context.Setting.config.upload.asgndocspath;
+            }
+            if (moduleName === "ASGN" && docType === "PHOTOS") {
+                photopath = context.Setting.config.upload.asgnphotopath;
+            }
+            const res = yield context.UploadService.delDocuments(args.id, args.input, photopath);
+            return res;
+        })
     }
 };
 //# sourceMappingURL=resolver.js.map

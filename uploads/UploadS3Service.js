@@ -26,25 +26,28 @@ const Staff_1 = require("../core/entities/Staff/Staff");
 const exceptions_1 = require("../core/exceptions");
 const Student_1 = require("../core/entities/Students/Student");
 class UploadS3Service {
-    constructor() { }
+    constructor() {
+        const endPoint = process.env.SPACES_END_POINT;
+        const bucket = process.env.SPACES_BUCKET;
+        const accessKeyId = process.env.SPACES_ACCESS_KEY_ID;
+        const secretAccessKey = process.env.SPACES_ACCESS_KEY;
+        this._endPoint = endPoint;
+        this._bucket = bucket;
+        this._accessKeyId = accessKeyId;
+        this._secretAccessKey = secretAccessKey;
+    }
     uploadFile(oFile, filePath, inData, currentUser) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 this.dbInData = inData;
                 this.uploadUser = currentUser;
                 this._filePath = filePath;
-                const endPoint = process.env.SPACES_END_POINT;
-                const accessKeyId = process.env.SPACES_ACCESS_KEY_ID;
-                const secretAccessKey = process.env.SPACES_ACCESS_KEY;
-                const bucket = process.env.SPACES_BUCKET;
-                this._endPoint = endPoint;
-                this._bucket = bucket;
                 let fileStatus = "ERROR";
-                const spacesEndpoint = new aws.Endpoint(endPoint);
+                const spacesEndpoint = new aws.Endpoint(this._endPoint);
                 const s3 = new aws.S3({
                     endpoint: spacesEndpoint,
-                    accessKeyId: accessKeyId,
-                    secretAccessKey: secretAccessKey
+                    accessKeyId: this._accessKeyId,
+                    secretAccessKey: this._secretAccessKey
                 });
                 const { createReadStream, filename, mimetype } = yield oFile;
                 const crStream = createReadStream();
@@ -52,7 +55,7 @@ class UploadS3Service {
                 const id = shortid_1.default.generate();
                 const params = {
                     Body: crStream,
-                    Bucket: bucket,
+                    Bucket: this._bucket,
                     Key: `${filePath}/${id}.${ext}`,
                     ACL: "public-read"
                 };
@@ -81,38 +84,85 @@ class UploadS3Service {
             }
         });
     }
+    deleteFile(id, docs, filePath) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let fileStatus = "ERROR";
+                const spacesEndpoint = new aws.Endpoint(this._endPoint);
+                const s3 = new aws.S3({
+                    endpoint: spacesEndpoint,
+                    accessKeyId: this._accessKeyId,
+                    secretAccessKey: this._secretAccessKey
+                });
+                const params = {
+                    Bucket: this._bucket,
+                    Key: `${filePath}/${docs.docid}`,
+                };
+                const delRes = () => {
+                    return s3.deleteObject(params).promise();
+                };
+                const delResult = (yield delRes()).$response;
+                if (delResult.error) {
+                    console.log(delResult.error);
+                    fileStatus = "No Files Deleted";
+                    return { Messages: fileStatus };
+                }
+                else {
+                    if (this.delDocsDB(id)) {
+                        fileStatus = "Deleted successfully";
+                    }
+                    else {
+                        fileStatus = "No Records Deleted";
+                    }
+                    return { Messages: fileStatus };
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
+    }
     saveDB(id, ext) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const dbIn = this.dbInData;
                 const fileName = `${id}.${ext}`;
-                const photoPath = `//${this._bucket}.${this._endPoint}/${this._filePath}/${fileName}`;
+                const photoPath = `https://${this._bucket}.${this._endPoint}/${this._filePath}/${fileName}`;
                 const entity = Object.assign(new DocsPhotos_1.DocsPhotos(), dbIn);
                 entity.docid = `${id}.${ext}`;
                 entity.createdby = this.uploadUser;
                 entity.mediaurl = photoPath;
                 if (entity.doctype === "PHOTOS") {
-                    this.updatePhotoURL(id, ext);
+                    this.updatePhotoURL(photoPath);
+                    const getPhotosEntity = yield this.findDocsPhotos(entity);
+                    if (getPhotosEntity && getPhotosEntity.id) {
+                        const upRes = yield typeorm_1.getManager()
+                            .getRepository(DocsPhotos_1.DocsPhotos)
+                            .update(getPhotosEntity.id, entity)
+                            .catch(err => {
+                            throw new exceptions_1.InternalServerError("saveDB:getPhotosEntity Error");
+                        });
+                    }
                 }
-                const res = yield typeorm_1.getManager()
-                    .getRepository(DocsPhotos_1.DocsPhotos)
-                    .save(entity);
-                return res;
+                else {
+                    const saveRes = yield typeorm_1.getManager()
+                        .getRepository(DocsPhotos_1.DocsPhotos)
+                        .save(entity);
+                }
+                return true;
             }
             catch (error) {
                 throw new exceptions_1.NotFound(`SaveDB Error. Please change the search criteria`);
             }
         });
     }
-    updatePhotoURL(id, ext) {
+    updatePhotoURL(photoPath) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const dbIn = this.dbInData;
                 const entity = new Staff_1.Staff();
                 entity.updatedby = this.uploadUser;
                 if (dbIn.modulename === "STAFF") {
-                    const fileName = `${id}.${ext}`;
-                    const photoPath = `//${this._bucket}.${this._endPoint}/${this._filePath}/${fileName}`;
                     const staffEntity = {
                         id: dbIn.staff,
                         photo: photoPath
@@ -125,8 +175,6 @@ class UploadS3Service {
                     });
                 }
                 else if (dbIn.modulename === "STUDENT") {
-                    const fileName = `${id}.${ext}`;
-                    const photoPath = `//${this._bucket}.${this._endPoint}/${this._filePath}/${fileName}`;
                     const studentEntity = {
                         id: dbIn.student,
                         photo: photoPath
@@ -142,6 +190,55 @@ class UploadS3Service {
             }
             catch (error) {
                 throw new exceptions_1.NotFound(`SaveDB Error. Please change the search criteria`);
+            }
+        });
+    }
+    findDocsPhotos(entity) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const res = typeorm_1.getManager()
+                    .getRepository(DocsPhotos_1.DocsPhotos)
+                    .createQueryBuilder("d")
+                    .where("d.name = :name")
+                    .andWhere("d.modulename = :modulename")
+                    .andWhere("d.doctype = :doctype");
+                if (entity.modulename === "STAFF") {
+                    res.andWhere("d.staff = :staff")
+                        .setParameter("staff", entity.staff);
+                }
+                if (entity.modulename === "STUDENT") {
+                    res.andWhere("d.student = :student")
+                        .setParameter("student", entity.student);
+                }
+                const result = res.setParameter("name", entity.name)
+                    .setParameter("modulename", entity.modulename)
+                    .setParameter("doctype", entity.doctype)
+                    .getOne();
+                return yield result;
+            }
+            catch (error) {
+                throw new exceptions_1.NotFound(`addUpdateDocsPhotos Error. Please change the search criteria`);
+            }
+        });
+    }
+    delDocsDB(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const res = yield typeorm_1.getManager()
+                    .createQueryBuilder()
+                    .delete()
+                    .from(DocsPhotos_1.DocsPhotos)
+                    .where("id = :id", { id: id })
+                    .execute();
+                if (res.affected >= 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("Unhandled Error", error);
             }
         });
     }

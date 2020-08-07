@@ -137,7 +137,18 @@ let UploadService = class UploadService {
             }
         });
     }
-    delDocuments(id, docs, photopath) {
+    delDocuments(id, docs, filePath) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const delS3 = new UploadS3Service_1.UploadS3Service();
+                return yield delS3.deleteFile(id, docs, filePath);
+            }
+            catch (error) {
+                throw new exceptions_1.NotFound(`Documents not found. Please change the search criteria`);
+            }
+        });
+    }
+    delDocuments_OLD(id, docs, photopath) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let delPath = `../../${photopath}/${docs.docid}`;

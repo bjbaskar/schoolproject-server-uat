@@ -26,6 +26,7 @@ function getContext() {
         DashboardService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.DashboardService),
         AttendanceService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.AttendanceService),
         AssignmentService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.AssignmentService),
+        ExamService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.ExamService),
         FeedbackService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.FeedbackService),
     };
 }
