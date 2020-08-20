@@ -24,7 +24,7 @@
 	"dependencies": {
 		"apollo-server": "^2.4.8",
 		"apollo-server-express": "^2.4.8",
-		"bcrypt": "^3.0.8",
+		"bcrypt": "^5.0.0",
 		"body-parser": "^1.18.3",
 		"class-validator": "^0.9.1",
 		"cors": "^2.8.5",
