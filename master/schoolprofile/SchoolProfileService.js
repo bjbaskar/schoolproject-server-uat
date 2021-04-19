@@ -67,7 +67,7 @@ let SchoolProfileService = class SchoolProfileService {
                     .getRepository(RulesRegulations_1.RulesRegulations)
                     .createQueryBuilder("rules")
                     .getMany();
-                const response = yield lodash_1.default(rules)
+                const response = lodash_1.default(rules)
                     .groupBy(grp => grp.title)
                     .map((value, key) => ({
                     title: key,

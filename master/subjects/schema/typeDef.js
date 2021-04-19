@@ -17,6 +17,7 @@ exports.typeDef = apollo_server_1.gql `
 	name: String
 	subcode: String
 	color: String
+	orderby: Int
 	createdby: String
 	createdon: DateTimeType
 	updatedby: String
@@ -27,6 +28,7 @@ exports.typeDef = apollo_server_1.gql `
 	name: String
 	subcode: String
 	color: String
+	orderby: Int
   }
 `;
 //# sourceMappingURL=typeDef.js.map

@@ -31,6 +31,10 @@ __decorate([
     __metadata("design:type", String)
 ], Subject.prototype, "color", void 0);
 __decorate([
+    typeorm_1.Column("int", { nullable: false }),
+    __metadata("design:type", Number)
+], Subject.prototype, "orderby", void 0);
+__decorate([
     typeorm_1.Column("varchar", { nullable: false }),
     __metadata("design:type", String)
 ], Subject.prototype, "createdby", void 0);

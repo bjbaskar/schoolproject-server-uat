@@ -127,6 +127,7 @@ let ClassService = class ClassService {
                     .leftJoinAndSelect("classSec.edusystem", "edusystem")
                     .leftJoinAndSelect("classSec.academicyear", "academicyear")
                     .orderBy({
+                    "classSec.orderby": "ASC",
                     "classSec.name": "ASC",
                     "classSec.section": "ASC",
                 })
@@ -277,7 +278,7 @@ let ClassService = class ClassService {
             }
             catch (error) {
                 yield queryRunner.rollbackTransaction();
-                throw new exceptions_1.InternalServerError("Unhandled Error", error);
+                throw new exceptions_1.InternalServerError("addStaffToClass - Unhandled Error", error);
             }
             finally {
                 yield queryRunner.release();

@@ -12,8 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const Exam_1 = require("./Exam");
 const Student_1 = require("../Students/Student");
-const Grades_1 = require("./Grades");
-const AcadYear_1 = require("../Master/AcadYear");
 let MarkRegister = class MarkRegister {
 };
 __decorate([
@@ -21,19 +19,25 @@ __decorate([
     __metadata("design:type", String)
 ], MarkRegister.prototype, "id", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => Exam_1.Exams, exams => exams.id),
-    __metadata("design:type", String)
+    typeorm_1.ManyToMany(type => Exam_1.Exams, {
+        cascade: true
+    }),
+    typeorm_1.JoinTable({ name: "exam_j_reg_exam" }),
+    __metadata("design:type", Array)
 ], MarkRegister.prototype, "exam_class_sub", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => Student_1.Students, student => student.id),
-    __metadata("design:type", String)
+    typeorm_1.ManyToMany(type => Student_1.Students, {
+        cascade: true
+    }),
+    typeorm_1.JoinTable({ name: "exam_j_reg_students" }),
+    __metadata("design:type", Array)
 ], MarkRegister.prototype, "students", void 0);
 __decorate([
     typeorm_1.Column("int", { nullable: false }),
     __metadata("design:type", Number)
 ], MarkRegister.prototype, "marks_obtained", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => Grades_1.ExamGrades, grade => grade.id),
+    typeorm_1.Column("varchar", { length: 100, nullable: true }),
     __metadata("design:type", String)
 ], MarkRegister.prototype, "grade", void 0);
 __decorate([
@@ -41,7 +45,7 @@ __decorate([
     __metadata("design:type", Number)
 ], MarkRegister.prototype, "percentage", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => AcadYear_1.AcadYear, acd => acd.id),
+    typeorm_1.Column("varchar", { length: 100, nullable: true }),
     __metadata("design:type", String)
 ], MarkRegister.prototype, "acad_year", void 0);
 __decorate([

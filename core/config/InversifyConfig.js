@@ -26,6 +26,12 @@ const AttendanceService_1 = require("../../attendance/AttendanceService");
 const AssignmentService_1 = require("../../assignment/AssignmentService");
 const ExamService_1 = require("../../exams/ExamService");
 const FeedbackService_1 = require("../../feedback/FeedbackService");
+const FeeParticularService_1 = require("../../fee/feeparticulars/FeeParticularService");
+const FeeInstallmentService_1 = require("../../fee/feeinstallments/FeeInstallmentService");
+const FeeMasterService_1 = require("../../fee/feemaster/FeeMasterService");
+const FeeStudentConfigSvc_1 = require("../../fee/feestudentconfig/FeeStudentConfigSvc");
+const FeeTransactionSvc_1 = require("../../fee/feetransaction/FeeTransactionSvc");
+const FeeDiscountSvc_1 = require("../../fee/feediscount/FeeDiscountSvc");
 const ContainerMain = new inversify_1.Container();
 exports.ContainerMain = ContainerMain;
 ContainerMain.bind(InversifyTypes_1.TYPES.Server).to(server_1.Server);
@@ -51,4 +57,10 @@ ContainerMain.bind(InversifyTypes_1.TYPES.AttendanceService).to(AttendanceServic
 ContainerMain.bind(InversifyTypes_1.TYPES.AssignmentService).to(AssignmentService_1.AssignmentService);
 ContainerMain.bind(InversifyTypes_1.TYPES.ExamService).to(ExamService_1.ExamService);
 ContainerMain.bind(InversifyTypes_1.TYPES.FeedbackService).to(FeedbackService_1.FeedbackService);
+ContainerMain.bind(InversifyTypes_1.TYPES.FeeParticularService).to(FeeParticularService_1.FeeParticularService);
+ContainerMain.bind(InversifyTypes_1.TYPES.FeeInstallmentService).to(FeeInstallmentService_1.FeeInstallmentService);
+ContainerMain.bind(InversifyTypes_1.TYPES.FeeMasterService).to(FeeMasterService_1.FeeMasterService);
+ContainerMain.bind(InversifyTypes_1.TYPES.FeeStudentConfigService).to(FeeStudentConfigSvc_1.FeeStudentConfigService);
+ContainerMain.bind(InversifyTypes_1.TYPES.FeeTransactionService).to(FeeTransactionSvc_1.FeeTransactionService);
+ContainerMain.bind(InversifyTypes_1.TYPES.FeeDiscountService).to(FeeDiscountSvc_1.FeeDiscountService);
 //# sourceMappingURL=InversifyConfig.js.map

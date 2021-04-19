@@ -20,8 +20,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const exceptions_1 = require("../core/exceptions");
 const ExamMasterSvc_1 = require("./ExamMasterSvc");
-const ExamMarkRegSvc_1 = require("./ExamMarkRegSvc");
+const ExamMarkEntrySvc_1 = require("./ExamMarkEntrySvc");
 const ExamGradeSvc_1 = require("./ExamGradeSvc");
+const ExamMarkRegisterSvc_1 = require("./ExamMarkRegisterSvc");
+const PromotionSvc_1 = require("./PromotionSvc");
 let ExamService = class ExamService {
     constructor() { }
     addExamMaster(input, currentUser) {
@@ -60,11 +62,11 @@ let ExamService = class ExamService {
             }
         });
     }
-    getAllExamMaster(examName, classId) {
+    getAllExamMaster(pageNo, pageSize, examName, classId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const obj = new ExamMasterSvc_1.ExamMasterService();
-                const res = obj.getAll(examName, classId);
+                const res = obj.getAll(pageNo, pageSize, examName, classId);
                 return res;
             }
             catch (error) {
@@ -84,11 +86,11 @@ let ExamService = class ExamService {
             }
         });
     }
-    addMarkReg(input, currentUser) {
+    verifyMarkRegister(input) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const obj = new ExamMarkRegSvc_1.MarkRegisterService();
-                const res = obj.addMarkReg(input, currentUser);
+                const obj = new ExamMarkEntrySvc_1.MarkEntryService();
+                const res = obj.verifyMarkReg(input);
                 return res;
             }
             catch (error) {
@@ -96,11 +98,35 @@ let ExamService = class ExamService {
             }
         });
     }
-    editMarkReg(id, input, currentUser) {
+    createMarkRegister(input, acadyear, currentUser) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const obj = new ExamMarkRegSvc_1.MarkRegisterService();
-                const res = obj.editMarkReg(id, input, currentUser);
+                const obj = new ExamMarkEntrySvc_1.MarkEntryService();
+                const res = obj.createMarkRegister(input, acadyear, currentUser);
+                return res;
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("createMarkReg Unhandled Error: Unable to delete", error);
+            }
+        });
+    }
+    addStudentToRegister(studentId, input, acadyear, currentUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const obj = new ExamMarkEntrySvc_1.MarkEntryService();
+                const res = obj.addStudentToRegister(studentId, input, acadyear, currentUser);
+                return res;
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("createMarkReg Unhandled Error: Unable to delete", error);
+            }
+        });
+    }
+    editMarkRegister(id, marksObtained, maxMarks, examName, classId, studentId, currentUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const obj = new ExamMarkEntrySvc_1.MarkEntryService();
+                const res = obj.editMarkRegister(id, marksObtained, maxMarks, examName, classId, studentId, currentUser);
                 return res;
             }
             catch (error) {
@@ -108,39 +134,81 @@ let ExamService = class ExamService {
             }
         });
     }
-    delMarkReg(id) {
+    getMarkEntry(input, acadyear) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const obj = new ExamMarkRegSvc_1.MarkRegisterService();
-                const res = obj.delMarkReg(id);
+                const examName = input.examName;
+                const classId = input.classId;
+                const subjectId = input.subjectId;
+                const obj = new ExamMarkEntrySvc_1.MarkEntryService();
+                const res = obj.getMarkEntry(examName, classId, subjectId, acadyear);
                 return res;
             }
             catch (error) {
-                throw new exceptions_1.InternalServerError("delMarkReg Unhandled Error: Unable to delete", error);
+                throw new exceptions_1.InternalServerError("editMarkReg Unhandled Error: Unable to delete", error);
             }
         });
     }
-    getMarkRegister(studentId) {
+    getClassMarkRegister(examName, classId, acadyear) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const obj = new ExamMarkRegSvc_1.MarkRegisterService();
-                const res = obj.getMarkRegister(studentId);
+                const obj = new ExamMarkRegisterSvc_1.MarkRegisterService();
+                const res = obj.getClassMarkRegister(examName, classId, acadyear);
                 return res;
             }
             catch (error) {
-                throw new exceptions_1.InternalServerError("getMarkRegister: Unhandled Error", error);
+                throw new exceptions_1.InternalServerError("editMarkReg Unhandled Error: Unable to delete", error);
             }
         });
     }
-    getAllMarkRegister(classId) {
+    getStudentMarks(examName, classId, studentId, acadyear) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const obj = new ExamMarkRegSvc_1.MarkRegisterService();
-                const res = obj.getAllMarkRegister(classId);
+                const obj = new ExamMarkRegisterSvc_1.MarkRegisterService();
+                const res = obj.getStudentMarks(examName, classId, studentId, acadyear);
                 return res;
             }
             catch (error) {
-                throw new exceptions_1.InternalServerError("getAllMarkRegister: Unhandled Error", error);
+                throw new exceptions_1.InternalServerError("editMarkReg Unhandled Error: Unable to delete", error);
+            }
+        });
+    }
+    getStudentsForPromotion(examName, classId, acadyear) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const inputParams = undefined;
+                const obj = new PromotionSvc_1.PromotionService(inputParams);
+                const res = obj.getStudentsForPromotion(examName, classId, acadyear);
+                return res;
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("editMarkReg Unhandled Error: Unable to delete", error);
+            }
+        });
+    }
+    doPromotion(input, currentUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                input.currentUser = currentUser;
+                const obj = new PromotionSvc_1.PromotionService(input);
+                const res = obj.doPromotion();
+                return res;
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("editMarkReg Unhandled Error: Unable to delete", error);
+            }
+        });
+    }
+    getPromotionHistory(classId, acadyear) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const inputParams = undefined;
+                const obj = new PromotionSvc_1.PromotionService(inputParams);
+                const res = obj.getPromotionHistory(classId, acadyear);
+                return res;
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("editMarkReg Unhandled Error: Unable to delete", error);
             }
         });
     }

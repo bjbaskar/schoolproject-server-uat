@@ -6,10 +6,12 @@ exports.typeDef = apollo_server_1.gql `
 		getSchoolProfile: SchoolProfile!
 	}
   extend type Mutation {
+		registerSchool(input: SchoolProfileInput): SchoolProfile
 		editSchoolProfile(id: String!, input: SchoolProfileInput): SchoolProfile
+		deleteSchool(id: String!): SchoolProfile
 	}
 
-  type SchoolProfile   {
+  type SchoolProfile {
 		id: String
 		name: String
 		surname: String
@@ -33,6 +35,7 @@ exports.typeDef = apollo_server_1.gql `
 		updatedby: String
 		updatedon: DateTimeType
 		rules: [SchoolRulesRegulations]
+		isactive: Boolean
 	}
 
 	type SchoolRulesRegulations {
@@ -45,7 +48,7 @@ exports.typeDef = apollo_server_1.gql `
 		tamiltext: String
 	}
 
-  input SchoolProfileInput {
+  	input SchoolProfileInput {
 		address: String
 		postalcode: String
 		district: String

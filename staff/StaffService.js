@@ -112,15 +112,39 @@ let StaffService = class StaffService {
             return yield this.findStaffById(id, isactive);
         });
     }
-    getAllStaff(isactive) {
+    getAllStaff(pageNo, pageSize, sortCol, isAsc, isactive) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const students = yield typeorm_1.getManager()
+                const currenPageNo = pageNo - 1;
+                const orderBy = sortCol ? sortCol : "staff.firstname";
+                const qb = typeorm_1.getManager()
                     .getRepository(Staff_1.Staff)
                     .createQueryBuilder("staff")
                     .where("staff.isactive = :value", { value: isactive })
-                    .getMany();
-                return students;
+                    .orderBy(orderBy, isAsc === "ASC" ? "ASC" : "DESC")
+                    .skip(currenPageNo * pageSize)
+                    .take(pageSize);
+                const staff = {
+                    rows: qb.getMany(),
+                    count: qb.getCount()
+                };
+                return staff;
+            }
+            catch (error) {
+                throw new exceptions_1.NotFound(`Staff not found. Please change the search criteria`);
+            }
+        });
+    }
+    getAllStaffDD(isactive) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const qb = typeorm_1.getManager()
+                    .getRepository(Staff_1.Staff)
+                    .createQueryBuilder("staff")
+                    .where("staff.isactive = :value", { value: true })
+                    .orderBy("staff.firstname", "ASC");
+                const res = qb.getMany();
+                return res;
             }
             catch (error) {
                 throw new exceptions_1.NotFound(`Staff not found. Please change the search criteria`);

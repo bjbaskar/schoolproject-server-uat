@@ -4,7 +4,8 @@ const apollo_server_1 = require("apollo-server");
 exports.typeDef = apollo_server_1.gql `
 	extend type Query {
 		getStaff(id: String, isactive: Boolean): Staff
-		getAllStaff(isactive: Boolean): [Staff]
+		getAllStaff(pageNo: Int, pageSize: Int, sortCol: String, isAsc: String, isactive: Boolean): StaffPagination!
+		getAllStaffDD(isactive: Boolean): [Staff]
 	}
 	extend type Mutation {
 		addStaffProfile(input: StaffInput): Staff
@@ -59,6 +60,11 @@ exports.typeDef = apollo_server_1.gql `
 		identification: String
 		isactive: Boolean
 		notes: String
+  }
+
+  type StaffPagination {
+	rows: [Staff]
+	count: Int
   }
 `;
 //# sourceMappingURL=typeDef.js.map

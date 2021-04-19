@@ -389,7 +389,7 @@ let StudentService = class StudentService {
                     qb.andWhere("stud.gender = :genderId", { genderId: filter.genderId });
                 }
                 if (filter.textId.trim().length > 0) {
-                    qb.andWhere("stud.firstname like :textId", { textId: "%" + filter.textId + "%" });
+                    qb.andWhere("stud.firstname like :textId", { textId: `%${filter.textId}%` });
                 }
                 qb.orderBy(orderBy, isAsc === "ASC" ? "ASC" : "DESC");
                 qb.skip(currenPageNo * pageSize);
@@ -583,7 +583,7 @@ let StudentService = class StudentService {
                     .getRepository(AcadYear_1.AcadYear)
                     .createQueryBuilder("acadyear")
                     .select("acadyear.prefixyear", "prefixyear")
-                    .where("acadyear.isactive = :active", { active: true })
+                    .where("acadyear.is_current = :active", { active: true })
                     .getRawOne();
                 if (!getPrefixYear) {
                     getPrefixYear = new Date().getFullYear().toString().substr(-2);

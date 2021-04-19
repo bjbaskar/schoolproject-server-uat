@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const apollo_server_1 = require("apollo-server");
 exports.typeDef = apollo_server_1.gql `
 	extend type Query {
-		getDataconfig(name: [String]): [DataConfig]
+		getDataconfig(filter: String): [DataConfig]
 		getAllDataconfigs: [DataConfig]
 		getCaste: [Caste]
 	}

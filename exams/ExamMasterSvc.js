@@ -73,9 +73,10 @@ class ExamMasterService {
             }
         });
     }
-    getAll(examName, classId) {
+    getAll(pageNo, pageSize, examName, classId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const currenPageNo = pageNo - 1;
                 const res = typeorm_1.getManager()
                     .getRepository(Exam_1.Exams)
                     .createQueryBuilder("exam")
@@ -86,6 +87,7 @@ class ExamMasterService {
                     "exam.max_marks AS maxMarks",
                     "exam.orderby AS orderby",
                     "exam.notes AS notes",
+                    "exam.is_final_exam AS is_final_exam",
                     "exam.createdby AS createdby",
                     "exam.createdon AS createdon",
                     "exam.updatedby AS updatedby",
@@ -106,10 +108,15 @@ class ExamMasterService {
                 if (examName && examName !== "ALL") {
                     res.andWhere("exam.name = :examName", { examName: examName });
                 }
-                const result = yield res.orderBy("exam.orderby", "ASC")
-                    .addOrderBy("class.name", "ASC")
-                    .getRawMany();
-                return result;
+                res.orderBy("exam.orderby", "ASC")
+                    .addOrderBy("class.name", "ASC");
+                res.offset(currenPageNo * pageSize);
+                res.limit(pageSize);
+                const examMasterRes = {
+                    rows: yield res.getRawMany(),
+                    count: yield res.getCount()
+                };
+                return examMasterRes;
             }
             catch (error) {
                 throw new exceptions_1.InternalServerError("Unhandled Error", error);
@@ -129,6 +136,7 @@ class ExamMasterService {
                     "exam.max_marks",
                     "exam.orderby",
                     "exam.notes",
+                    "exam.is_final_exam",
                     "exam.createdby",
                     "exam.createdon",
                     "exam.updatedby",

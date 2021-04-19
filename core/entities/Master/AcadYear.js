@@ -36,7 +36,11 @@ __decorate([
 __decorate([
     typeorm_1.Column("boolean", { nullable: false }),
     __metadata("design:type", Boolean)
-], AcadYear.prototype, "isactive", void 0);
+], AcadYear.prototype, "is_current", void 0);
+__decorate([
+    typeorm_1.Column("boolean", { nullable: false }),
+    __metadata("design:type", Boolean)
+], AcadYear.prototype, "is_next", void 0);
 __decorate([
     typeorm_1.OneToMany(type => ClassSections_1.ClassSections, cls => cls.academicyear),
     __metadata("design:type", String)

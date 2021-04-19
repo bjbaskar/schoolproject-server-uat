@@ -142,6 +142,14 @@ __decorate([
     __metadata("design:type", Users_1.Users)
 ], Students.prototype, "user", void 0);
 __decorate([
+    typeorm_1.Column("varchar", { length: 100, nullable: true }),
+    __metadata("design:type", String)
+], Students.prototype, "acad_year", void 0);
+__decorate([
+    typeorm_1.Column("varchar", { length: 100, nullable: true }),
+    __metadata("design:type", String)
+], Students.prototype, "school_id", void 0);
+__decorate([
     typeorm_1.Column("varchar", { nullable: false }),
     __metadata("design:type", String)
 ], Students.prototype, "createdby", void 0);

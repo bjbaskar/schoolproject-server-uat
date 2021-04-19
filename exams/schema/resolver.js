@@ -13,7 +13,7 @@ exports.resolvers = {
         getAllExamMaster(_, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
                 const svr = context.ExamService;
-                const res = yield svr.getAllExamMaster(args.examName, args.classId);
+                const res = yield svr.getAllExamMaster(args.pageNo, args.pageSize, args.examName, args.classId);
                 return res;
             });
         },
@@ -24,24 +24,45 @@ exports.resolvers = {
                 return res;
             });
         },
-        getMarkRegister(_, args, context) {
+        verifyMarkRegister(_, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
                 const svr = context.ExamService;
-                const res = yield svr.getMarkRegister(args.studentId);
+                const res = yield svr.verifyMarkRegister(args.input);
                 return res;
             });
         },
-        getAllMarkRegister(_, args, context) {
+        getMarkEntry(root, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
                 const svr = context.ExamService;
-                const res = yield svr.getAllMarkRegister(args.classId);
+                const res = yield svr.getMarkEntry(args.input, args.acadyear);
                 return res;
             });
         },
-        getExamGrade(_, args, context) {
+        getClassMarkRegister(root, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
                 const svr = context.ExamService;
-                const res = yield svr.getExamGrade(args.id);
+                const res = yield svr.getClassMarkRegister(args.examName, args.classId, args.acadyear);
+                return res;
+            });
+        },
+        getStudentMarks(root, args, context) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const svr = context.ExamService;
+                const res = yield svr.getStudentMarks(args.examName, args.classId, args.studentId, args.acadyear);
+                return res;
+            });
+        },
+        getStudentsForPromotion(root, args, context) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const svr = context.ExamService;
+                const res = yield svr.getStudentsForPromotion(args.examName, args.classId, args.acadyear);
+                return res;
+            });
+        },
+        getPromotionHistory(root, args, context) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const svr = context.ExamService;
+                const res = yield svr.getPromotionHistory(args.classId, args.acadyear);
                 return res;
             });
         },
@@ -74,23 +95,35 @@ exports.resolvers = {
                 return res;
             });
         },
-        addMarkReg(root, args, context) {
+        createMarkRegister(root, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
                 const currentUser = context.CurrentUser.UserName;
-                const res = yield context.ExamService.addMarkReg(args.input, currentUser);
+                const svr = context.ExamService;
+                const res = yield svr.createMarkRegister(args.input, args.acadyear, currentUser);
                 return res;
             });
         },
-        editMarkReg(root, args, context) {
+        editMarkRegister(root, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
                 const currentUser = context.CurrentUser.UserName;
-                const res = yield context.ExamService.editMarkReg(args.id, args.input, currentUser);
+                const svr = context.ExamService;
+                const res = yield svr.editMarkRegister(args.id, args.marksObtained, args.maxMarks, args.examName, args.classId, args.studentId, currentUser);
                 return res;
             });
         },
-        delMarkReg(root, args, context) {
+        addStudentToRegister(root, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
-                const res = yield context.ExamService.delMarkReg(args.id);
+                const currentUser = context.CurrentUser.UserName;
+                const svr = context.ExamService;
+                const res = yield svr.addStudentToRegister(args.studentId, args.input, args.acadyear, currentUser);
+                return res;
+            });
+        },
+        doPromotion(root, args, context) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const currentUser = context.CurrentUser.UserName;
+                const svr = context.ExamService;
+                const res = yield svr.doPromotion(args.input, currentUser);
                 return res;
             });
         },

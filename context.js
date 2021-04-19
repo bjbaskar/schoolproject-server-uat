@@ -28,6 +28,12 @@ function getContext() {
         AssignmentService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.AssignmentService),
         ExamService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.ExamService),
         FeedbackService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.FeedbackService),
+        FeeParticularService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.FeeParticularService),
+        FeeInstallmentService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.FeeInstallmentService),
+        FeeMasterService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.FeeMasterService),
+        FeeStudentConfigService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.FeeStudentConfigService),
+        FeeTransactionService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.FeeTransactionService),
+        FeeDiscountService: InversifyConfig_1.ContainerMain.get(InversifyTypes_1.TYPES.FeeDiscountService),
     };
 }
 exports.getContext = getContext;

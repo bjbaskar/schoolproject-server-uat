@@ -5,6 +5,8 @@ exports.typeDef = apollo_server_1.gql `
     extend type Query {
 		getAcadYear(id: String): AcadYear
 		getAcadYears: [AcadYear]
+		getNextAcadYear: [AcadYear]
+		getAcadYearByCurrent: AcadYear
     }
     extend type Mutation {
 		addAcadYear(input: AcadYearInput): AcadYear
@@ -17,7 +19,12 @@ exports.typeDef = apollo_server_1.gql `
 		todate: DateTimeType
 		displayname: String
 		prefixyear: Int
-		isactive: Boolean
+		is_current: Boolean
+		is_next: Boolean
+		createdby: String
+		createdon: DateTimeType
+		updatedby: String
+		updatedon: DateTimeType
     }
 
     input AcadYearInput   {
@@ -25,7 +32,8 @@ exports.typeDef = apollo_server_1.gql `
 		todate: DateTimeType
 		displayname: String
 		prefixyear: Int
-		isactive: Boolean
+		is_current: Boolean
+		is_next: Boolean
     }
 `;
 //# sourceMappingURL=typeDef.js.map

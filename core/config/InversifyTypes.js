@@ -24,6 +24,12 @@ const TYPES = {
     AssignmentService: Symbol.for("AssignmentService"),
     ExamService: Symbol.for("ExamService"),
     FeedbackService: Symbol.for("FeedbackService"),
+    FeeParticularService: Symbol.for("FeeParticularService"),
+    FeeInstallmentService: Symbol.for("FeeInstallmentService"),
+    FeeMasterService: Symbol.for("FeeMasterService"),
+    FeeStudentConfigService: Symbol.for("FeeStudentConfigService"),
+    FeeTransactionService: Symbol.for("FeeTransactionService"),
+    FeeDiscountService: Symbol.for("FeeDiscountService"),
 };
 exports.TYPES = TYPES;
 //# sourceMappingURL=InversifyTypes.js.map

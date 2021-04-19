@@ -14,7 +14,10 @@ exports.resolvers = {
             return yield context.StaffService.getStaff(args.id, args.isactive);
         }),
         getAllStaff: (_, args, context) => __awaiter(this, void 0, void 0, function* () {
-            return yield context.StaffService.getAllStaff(args.isactive);
+            return yield context.StaffService.getAllStaff(args.pageNo, args.pageSize, args.sortCol, args.isAsc, args.isactive);
+        }),
+        getAllStaffDD: (_, args, context) => __awaiter(this, void 0, void 0, function* () {
+            return yield context.StaffService.getAllStaffDD(args.isactive);
         })
     },
     Mutation: {

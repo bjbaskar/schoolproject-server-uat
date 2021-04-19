@@ -20,6 +20,16 @@ exports.resolvers = {
             return __awaiter(this, void 0, void 0, function* () {
                 return context.AcadYearService.listAcadYear();
             });
+        },
+        getNextAcadYear(_, args, context) {
+            return __awaiter(this, void 0, void 0, function* () {
+                return context.AcadYearService.getNextAcadYear();
+            });
+        },
+        getAcadYearByCurrent(_, args, context) {
+            return __awaiter(this, void 0, void 0, function* () {
+                return context.AcadYearService.getAcadYearByCurrent();
+            });
         }
     },
     Mutation: {

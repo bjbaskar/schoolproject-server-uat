@@ -47,6 +47,10 @@ __decorate([
     __metadata("design:type", String)
 ], Exams.prototype, "notes", void 0);
 __decorate([
+    typeorm_1.Column("boolean", { nullable: false }),
+    __metadata("design:type", Boolean)
+], Exams.prototype, "is_final_exam", void 0);
+__decorate([
     typeorm_1.Column("varchar", { nullable: false }),
     __metadata("design:type", String)
 ], Exams.prototype, "createdby", void 0);

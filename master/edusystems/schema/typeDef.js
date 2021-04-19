@@ -15,6 +15,10 @@ exports.typeDef = apollo_server_1.gql `
 		id: String
 		name: String
 		levels: String
+		createdby: String
+		createdon: DateTimeType
+		updatedby: String
+		updatedon: DateTimeType
     }
 
     input EduSystemInput   {

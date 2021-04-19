@@ -13,7 +13,7 @@ exports.resolvers = {
         getDataconfig(_, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
                 const dataService = context.DataConfigService;
-                return yield dataService.findDataConfigById(args.name);
+                return yield dataService.findDataConfigById(args.filter);
             });
         },
         getAllDataconfigs(_, args, context) {

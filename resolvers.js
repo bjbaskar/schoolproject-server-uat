@@ -22,6 +22,12 @@ const schema_16 = require("./attendance/schema");
 const schema_17 = require("./assignment/schema");
 const schema_18 = require("./exams/schema");
 const schema_19 = require("./feedback/schema");
+const schema_20 = require("./fee/feeparticulars/schema");
+const schema_21 = require("./fee/feeinstallments/schema");
+const schema_22 = require("./fee/feemaster/schema");
+const schema_23 = require("./fee/feestudentconfig/schema");
+const schema_24 = require("./fee/feetransaction/schema");
+const schema_25 = require("./fee/feediscount/schema");
 const upScalartypeDefs = `
   scalar Upload
 `;
@@ -58,9 +64,15 @@ const allTypeDefs = [
     schema_16.attendanceTypeDef,
     schema_17.assignTypeDef,
     schema_18.examTypeDef,
-    schema_19.feedbackTypeDef
+    schema_19.feedbackTypeDef,
+    schema_20.feeParticularsType,
+    schema_21.feeInstallmentsType,
+    schema_22.feeMasterType,
+    schema_23.feeStudentConfigType,
+    schema_24.feeTransType,
+    schema_25.feeDiscountType
 ];
-const allResolvers = lodash_1.merge({}, schema_1.userResolver, schema_2.roleResolver, schema_4.schoolProfileResolver, schema_5.aYearResolver, schema_6.eduResolver, schema_7.subjResolver, schema_8.classResolver, schema_9.textbookResolver, schema_3.dConfigResolver, schema_10.holidayResolver, schema_11.calResolver, schema_12.studentResolver, schema_13.staffResolver, upScalarResolvers, schema_14.uploadResolver, schema_15.dashBoardResolver, schema_16.attendanceResolver, schema_17.assignResolver, schema_18.examResolver, schema_19.feedbackResolver);
+const allResolvers = lodash_1.merge({}, schema_1.userResolver, schema_2.roleResolver, schema_4.schoolProfileResolver, schema_5.aYearResolver, schema_6.eduResolver, schema_7.subjResolver, schema_8.classResolver, schema_9.textbookResolver, schema_3.dConfigResolver, schema_10.holidayResolver, schema_11.calResolver, schema_12.studentResolver, schema_13.staffResolver, upScalarResolvers, schema_14.uploadResolver, schema_15.dashBoardResolver, schema_16.attendanceResolver, schema_17.assignResolver, schema_18.examResolver, schema_19.feedbackResolver, schema_20.feeParticularsResolver, schema_21.feeInstallmentsResolver, schema_22.feeMasterResolver, schema_23.feeStudentConfigResolver, schema_24.feeTransResolver, schema_25.feeDiscountResolver);
 exports.default = apollo_server_1.makeExecutableSchema({
     typeDefs: allTypeDefs,
     resolvers: allResolvers

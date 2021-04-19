@@ -86,6 +86,37 @@ let AcadYearService = class AcadYearService {
             }
         });
     }
+    getNextAcadYear() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const res = yield typeorm_1.getManager()
+                    .getRepository(AcadYear_1.AcadYear)
+                    .createQueryBuilder("a")
+                    .where("a.is_current = true")
+                    .orWhere("a.is_next = true")
+                    .getMany();
+                return res;
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("Unhandled Error", error);
+            }
+        });
+    }
+    getAcadYearByCurrent() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const res = yield typeorm_1.getManager()
+                    .getRepository(AcadYear_1.AcadYear)
+                    .createQueryBuilder("a")
+                    .where("a.is_current = true")
+                    .getOne();
+                return res;
+            }
+            catch (error) {
+                throw new exceptions_1.InternalServerError("Unhandled Error", error);
+            }
+        });
+    }
     findAcadYearById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

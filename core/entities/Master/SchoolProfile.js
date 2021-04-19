@@ -90,6 +90,10 @@ __decorate([
     __metadata("design:type", Array)
 ], SchoolProfile.prototype, "documents", void 0);
 __decorate([
+    typeorm_1.Column("boolean", { nullable: false }),
+    __metadata("design:type", Boolean)
+], SchoolProfile.prototype, "isactive", void 0);
+__decorate([
     typeorm_1.Column("varchar", { nullable: false }),
     __metadata("design:type", String)
 ], SchoolProfile.prototype, "createdby", void 0);

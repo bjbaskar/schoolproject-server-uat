@@ -104,14 +104,14 @@ let DataConfigService = class DataConfigService {
             }
         });
     }
-    findDataConfigById(name) {
+    findDataConfigById(filter) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const res = yield typeorm_1.getManager()
                     .getRepository(DataConfig_1.DataConfig)
                     .createQueryBuilder("d")
                     .orderBy("d.value", "ASC")
-                    .where("name IN (:...name)", { name: name })
+                    .where("name = :filter", { filter: filter })
                     .getMany();
                 return res;
             }

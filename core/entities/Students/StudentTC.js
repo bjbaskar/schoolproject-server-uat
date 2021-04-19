@@ -31,6 +31,10 @@ __decorate([
     __metadata("design:type", String)
 ], StudentTC.prototype, "scholarship", void 0);
 __decorate([
+    typeorm_1.Column("varchar", { length: 250, nullable: true }),
+    __metadata("design:type", String)
+], StudentTC.prototype, "rte", void 0);
+__decorate([
     typeorm_1.Column("timestamp", { nullable: false }),
     __metadata("design:type", Date)
 ], StudentTC.prototype, "medicalinspection", void 0);
@@ -39,17 +43,25 @@ __decorate([
     __metadata("design:type", String)
 ], StudentTC.prototype, "conductcharacter", void 0);
 __decorate([
-    typeorm_1.Column("varchar", { length: 250, nullable: true }),
+    typeorm_1.Column("varchar", { length: 100, nullable: true }),
     __metadata("design:type", String)
-], StudentTC.prototype, "promoted", void 0);
+], StudentTC.prototype, "class_studied", void 0);
 __decorate([
-    typeorm_1.Column("varchar", { length: 30, nullable: true }),
+    typeorm_1.Column("varchar", { length: 100, nullable: true }),
     __metadata("design:type", String)
-], StudentTC.prototype, "classsec", void 0);
+], StudentTC.prototype, "period_of_study", void 0);
 __decorate([
     typeorm_1.Column("timestamp", { nullable: false }),
     __metadata("design:type", Date)
 ], StudentTC.prototype, "doj", void 0);
+__decorate([
+    typeorm_1.Column("varchar", { length: 100, nullable: true }),
+    __metadata("design:type", String)
+], StudentTC.prototype, "leaving_class", void 0);
+__decorate([
+    typeorm_1.Column("varchar", { length: 250, nullable: true }),
+    __metadata("design:type", String)
+], StudentTC.prototype, "promoted", void 0);
 __decorate([
     typeorm_1.Column("timestamp", { nullable: false }),
     __metadata("design:type", Date)
@@ -58,6 +70,10 @@ __decorate([
     typeorm_1.Column("varchar", { length: 20, nullable: true }),
     __metadata("design:type", String)
 ], StudentTC.prototype, "firstlanguage", void 0);
+__decorate([
+    typeorm_1.Column("varchar", { length: 100, nullable: true }),
+    __metadata("design:type", String)
+], StudentTC.prototype, "medium_of_instruct", void 0);
 __decorate([
     typeorm_1.Column("varchar", { length: 30, nullable: true }),
     __metadata("design:type", String)

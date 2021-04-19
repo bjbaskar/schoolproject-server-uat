@@ -81,6 +81,10 @@ let AssignmentService = class AssignmentService {
                     .leftJoin("cls.classteachersub", "ct")
                     .leftJoin("ct.subject", "s")
                     .where("cls.id = :id", { id: classId })
+                    .orderBy({
+                    "s.orderby": "ASC",
+                    "s.name": "ASC"
+                })
                     .getRawMany();
                 return res;
             }

@@ -28,6 +28,7 @@ exports.typeDef = apollo_server_1.gql `
 	createdon: DateTimeType
 	updatedby: String
 	updatedon: DateTimeType
+	is_final_year: Boolean
   }
 
 	type ClassTeacher {
@@ -42,6 +43,7 @@ exports.typeDef = apollo_server_1.gql `
 	 isactive: Boolean
 	 academicyear: String
 	 edusystem: String
+	 is_final_year: Boolean
   }
 
   input ClassStaffInput {

@@ -94,6 +94,10 @@ __decorate([
     typeorm_1.ManyToMany(type => Student_1.Students, stud => stud.classsec),
     __metadata("design:type", Array)
 ], ClassSections.prototype, "students", void 0);
+__decorate([
+    typeorm_1.Column("boolean", { nullable: false }),
+    __metadata("design:type", Boolean)
+], ClassSections.prototype, "is_final_year", void 0);
 ClassSections = __decorate([
     typeorm_1.Entity("m_classsection")
 ], ClassSections);
