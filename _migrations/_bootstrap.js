@@ -81,7 +81,18 @@ class Bootstrap {
                 yield queryRunner.connect();
                 yield queryRunner.startTransaction();
                 const qryManager = queryRunner.manager;
+                yield this.staffAdd(qryManager);
+                yield this.roleAdd(qryManager);
+                yield this.registerUser(qryManager);
                 yield this.dataConfigAdd(qryManager);
+                yield this.casteAdd(qryManager);
+                yield this.subjectAdd(qryManager);
+                yield this.classAdd(qryManager);
+                yield this.schoolProfileAdd(qryManager);
+                yield this.eduLevels(qryManager);
+                yield this.schoolRules(qryManager);
+                yield this.examsAdd(qryManager);
+                yield this.examGradesAdd(qryManager);
                 yield queryRunner.commitTransaction();
                 console.log("----------------");
                 console.log("Sucessfully added");
